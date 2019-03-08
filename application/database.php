@@ -19,7 +19,7 @@ return [
     // 用户名
     'username'        => 'faka',
     // 密码
-    'password'        => 'tWPb78PWNNt3PAjP',
+    'password'        => '',
     // 端口
     'hostport'        => '3306',
     // 连接dsn
