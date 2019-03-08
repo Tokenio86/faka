@@ -1,0 +1,223 @@
+{extend name="index" /}
+{block name="title"}
+常用设置
+{/block}
+{block name="body"}
+<form action="" method="post" onsubmit="return editgonggao()" class="layui-form">
+<div class="layui-tab layui-tab-card">
+  <ul class="layui-tab-title">
+    <li class="layui-this">基本设置</li>
+    <li>SEO设置</li>
+    <li>代理设置</li>
+    <li>支付方式</li>
+    <li>邮箱配置</li>
+    <li>其他配置</li>
+  </ul>
+  <div class="layui-tab-content">
+    <div class="layui-tab-item layui-show">
+      <div class="layui-form-item">
+        <label class="layui-form-label">网站名称</label>
+        <div class="layui-input-inline">
+          <input type="text" name="sitename" value="{$res.sitename}" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">不要超过八个汉字</div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">网站域名</label>
+        <div class="layui-input-inline">
+          <input type="text" name="siteurl" value="{$res.siteurl}" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">需要带http://切以斜杠"/"结尾 如：http://www.baidu.com/</div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">联系QQ</label>
+        <div class="layui-input-inline">
+          <input type="text" name="qq" value="{$res.qq}" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">不能超过11位</div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">LOGO图片</label>
+        <div class="layui-input-inline">
+          <input type="text" name="logoimg" id="logoimg" value="{$res.logoimg}" placeholder="请输入带http://的图片链接" class="layui-input">
+        </div>
+        <button type="button" class="layui-btn layui-btn-danger" id="uploadsrc">上传图片</button>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">限制数量</label>
+        <div class="layui-input-inline">
+          <input type="text" name="maxsl" value="{$res.maxsl}" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">限制最大购买数量,填0为不限制</div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">首页模式</label>
+        <div class="layui-input-block">
+          <input type="radio" name="indexmode" value="0" title="分类模式" {if condition="($res.indexmode == 0)" }checked="" {/if}>
+          <input type="radio" name="indexmode" value="1" title="列表模式" {if condition="($res.indexmode == 1)" }checked="" {/if}>
+          <input type="radio" name="indexmode" value="2" title="详情模式" {if condition="($res.indexmode == 2)" }checked="" {/if}>
+        </div>
+      </div>
+    </div>
+    <div class="layui-tab-item">
+        <blockquote class="layui-elem-quote">关键字一般不超过100个字符,网站描述一般不超过200个字符</blockquote>
+        <div class="layui-form-item">
+            <label class="layui-form-label">关键字</label>
+            <div class="layui-input-block">
+              <input type="text" name="keywords"  class="layui-input"  placeholder="网站关键词不超过100字符" value="{$res.keywords}">
+            </div>
+          </div>
+      <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">网站描述</label>
+        <div class="layui-input-block">
+          <textarea name="description" placeholder="网站描述不超过200字符" class="layui-textarea">{$res.description}</textarea>
+        </div>
+      </div>
+    </div>
+    <div class="layui-tab-item">
+      <div class="layui-form-item">
+        <label class="layui-form-label">开通价格</label>
+        <div class="layui-input-inline">
+          <input type="text" name="opdl" value="{$res.opdl}" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">自助开通代理账户的价格</div>
+      </div>
+    </div>
+    <div class="layui-tab-item">
+      <div class="layui-form-item">
+        <label class="layui-form-label">支付宝支付</label>
+        <div class="layui-input-block">
+          <input type="radio" name="alipay" value="1" title="开启" {if condition="($res.alipay == 1)" }checked="" {/if}>
+          <input type="radio" name="alipay" value="0" title="不开启" {if condition="($res.alipay == 0)" }checked="" {/if}>
+        </div>
+      </div>
+      
+      <div class="layui-form-item">
+        <label class="layui-form-label">微信支付</label>
+        <div class="layui-input-block">
+          <input type="radio" name="wxpay" value="1" title="开启" {if condition="($res.wxpay == 1)" }checked="" {/if}>
+          <input type="radio" name="wxpay" value="0" title="不开启" {if condition="($res.wxpay == 0)" }checked="" {/if}>
+        </div>
+      </div>
+      
+      <div class="layui-form-item">
+        <label class="layui-form-label">QQ钱包支付</label>
+        <div class="layui-input-block">
+          <input type="radio" name="qqpay" value="1" title="开启" {if condition="($res.qqpay == 1)" }checked="" {/if}>
+          <input type="radio" name="qqpay" value="0" title="不开启" {if condition="($res.qqpay == 0)" }checked="" {/if}>
+        </div>
+      </div>
+    </div>
+    <div class="layui-tab-item">
+      <div class="layui-form-item">
+        <label class="layui-form-label">邮箱发卡</label>
+        <div class="layui-input-block">
+          <input type="radio" name="mailon" value="1" title="开启" {if condition="($res.mailon == 1)" }checked="" {/if}>
+          <input type="radio" name="mailon" value="0" title="不开启" {if condition="($res.mailon == 0)" }checked="" {/if}>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">邮箱服务器</label>
+        <div class="layui-input-inline">
+          <input type="text" name="emailhost" value="{$res.emailhost}" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">如：smtp.exmail.qq.com</div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">邮箱端口</label>
+        <div class="layui-input-inline">
+          <input type="text" name="emailport" value="{$res.emailport}" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">如：25</div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">邮箱账号</label>
+        <div class="layui-input-inline">
+          <input type="text" name="emailuser" value="{$res.emailuser}" class="layui-input">
+        </div>
+      
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">邮箱密码</label>
+        <div class="layui-input-inline">
+          <input type="password" name="emailpass" value="{$res.emailpass}" class="layui-input">
+        </div>
+      
+      </div>
+    </div>
+    <div class="layui-tab-item">
+      <div class="layui-form-item">
+        <label class="layui-form-label">统计代码</label>
+        <div class="layui-input-block">
+          <textarea name="tongji" placeholder="请输入" class="layui-textarea">{$res.tongji}</textarea>
+        </div>
+      
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">首页公告</label>
+        <div class="layui-input-block">
+          <textarea id="gonggao" name="gonggao">
+                                 {$res.gonggao}
+                                  </textarea>
+        </div>
+      
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">商品页公告</label>
+        <div class="layui-input-block">
+          <textarea id="goodgg" name="goodgg">
+                                 {$res.goodgg}
+                                  </textarea>
+        </div>
+      </div>
+    </div>
+    <div class="layui-tab-item">6</div>
+  </div>
+</div>              
+                        <button class="layui-btn" lay-submit lay-filter="formDemo">保存设置</button>
+                     
+                  </form>
+  <script charset="utf-8" src="__STATIC__/editor/kindeditor-all.js"></script>
+  <script charset="utf-8" src="__STATIC__/editor/lang/zh-CN.js"></script>
+<script>
+  layui.use('form', function () {
+      var form = layui.form;
+    form.render();
+      //各种基于事件的操作，下面会有进一步介绍
+    });
+             KindEditor.ready(function (K) {
+                window.editor = K.create('#gonggao',{
+                  allowImageUpload: false,
+                  width: '100%',
+                  height:'300px',
+                  items:[
+                    'source', 'justifycenter','justifyright','insertorderedlist','insertunorderedlist','fontname','fontsize','forecolor','hilitecolor','bold','italic','underline','strikethrough','image','hr','emoticons','link','unlink'
+                    ]
+                });
+                window.editor = K.create('#goodgg', {
+                  allowImageUpload: false,
+                    width: '100%',
+                    height: '300px',
+                    items: [
+                      'source', 'justifycenter', 'justifyright', 'insertorderedlist', 'insertunorderedlist', 'fontname', 'fontsize', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline', 'strikethrough', 'image', 'hr', 'emoticons', 'link', 'unlink'
+                    ]
+                  });   
+              });
+     layui.use('upload', function () {
+        var upload = layui.upload;
+        var uploadInst = upload.render({
+          elem: '#uploadsrc' //绑定元素
+          , url: '/{$Think.config.admin_url}/index/uploadimg' //上传接口
+          , done: function (res) {
+            a = res.data;
+            $("#logoimg").val('{$siteinfo.siteurl}' + a.src);
+            layer.msg('上传成功')
+          }
+          , error: function () {
+            layer.msg('上传失败')
+          }
+        });
+      });
+</script>
+  
+{/block}

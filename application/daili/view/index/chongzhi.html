@@ -1,0 +1,44 @@
+{extend name="base" /}
+{block name="content"}
+<div class="layui-row">
+    <div class="layui-col-xs12 layui-col-md12">
+        <div style="background-color:#fff;padding:20px">
+            <form class="layui-form" method="post" action=""> 
+            <div class="layui-form-item">
+                <label class="layui-form-label">代理编号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="dailiid" class="layui-input" value="{$Think.session.dailiid}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">充值金额</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="money" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">元</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">支付方式</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="paytype" value="1" title="支付宝" checked="">
+                    <input type="radio" name="paytype" value="2" title="QQ钱包">
+                    <input type="radio" name="paytype" value="3" title="微信支付">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="demo1">立即充值</button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use('form', function () {
+        var form = layui.form;
+        form.render();
+        //各种基于事件的操作，下面会有进一步介绍
+    });
+</script>
+{/block}

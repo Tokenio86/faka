@@ -1,0 +1,118 @@
+{extend name="index" /}
+{block name="title"}
+修改商品
+{/block}
+{block name="body"}
+<form class="layui-form" action="/{$Think.config.admin_url}/index/posteditgood" style="margin-top:20px" method="post" onsubmit="return editgood()">
+    <div class="layui-form-item">
+            <label class="layui-form-label">商品编号</label>
+            <div class="layui-input-inline">
+              <input type="text"  class="layui-input" value="{$res.id}" disabled><input type="hidden" name="id" value="{$res.id}">
+            </div>
+          </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">商品名称</label>
+          <div class="layui-input-inline">
+            <input type="text" name="name" placeholder="请输入商品名称" class="layui-input" value="{$res.name}">
+          </div>
+        </div>
+
+        <div class="layui-form-item">
+          <label class="layui-form-label">商品状态</label>
+          <div class="layui-input-block">
+            <input type="radio" name="status" value="0" title="出售中" {if condition="($status == 0)" }checked="" {/if}>
+            <input type="radio" name="status" value="1" title="已下架" {if condition="($status == 1)" }checked="" {/if}>
+          </div>
+        </div>
+        <div class="layui-form-item">
+                <label class="layui-form-label">所属分类</label>
+                <div class="layui-input-inline">
+                  <select name="abridge" lay-filter="aihao">
+                        {foreach $fenlei as $vo} 
+                    <option value="{$vo.abridge}" {if condition="($res.abridge == $vo.abridge)" }selected=""{/if}>{$vo.name}</option>
+                        {/foreach}
+                  </select>
+                </div>
+              </div>
+        <div class="layui-form-item">
+                <label class="layui-form-label">商品价格</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="price" placeholder="请输入商品价格" class="layui-input" value="{$res.price}">
+                </div><div class="layui-form-mid layui-word-aux">元/件</div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">代理价格</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="dailiprice" placeholder="请输入商品价格" class="layui-input" value="{$res.dailiprice}">
+                </div> <div class="layui-form-mid layui-word-aux">元/件</div>
+              </div>
+              <div class="layui-form-item">
+                <div class="layui-inline">
+                  <label class="layui-form-label">满件优惠</label><div class="layui-form-mid">满</div>
+                  <div class="layui-input-inline" style="width: 100px;">
+                    <input type="text" name="mansl" placeholder="件数" autocomplete="off" class="layui-input" value="{$res.mansl}">
+                  </div>
+                  <div class="layui-form-mid">件单价为：</div>
+                  <div class="layui-input-inline" style="width: 100px;">
+                    <input type="text" name="yhprice" placeholder="单价" autocomplete="off" class="layui-input" value="{$res.yhprice}">
+                  </div> <div class="layui-form-mid">元/件</div>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                    <label class="layui-form-label">商品图片</label>
+                    <div class="layui-input-inline">
+                      <input type="text" name="image" id="image" placeholder="请输入带http://的图片链接" class="layui-input" value="{$res.images}">
+                    </div><button type="button" class="layui-btn layui-btn-danger" id="uploadsrc">上传图片</button>
+                  </div>
+                  <div class="layui-form-item">
+                      <label class="layui-form-label">商品排序</label>
+                      <div class="layui-input-inline">
+                        <input type="number" name="sort" placeholder="数字越小越靠前" class="layui-input" value="{$res.sort}">
+                      </div>
+                    </div>
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">商品介绍</label>
+                      <div class="layui-input-block">
+                        <textarea id="Introduction" name="Introduction">
+                           {$res.Introduction}
+                            </textarea>
+                      </div>
+
+                    </div>
+              <div class="layui-form-item">
+                    <div class="layui-input-block">
+                      <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                      <a class="layui-btn" href="/{$Think.config.admin_url}/index/goods.html">返回</a>
+                    </div>
+                  </div>
+        </form>
+        <script charset="utf-8" src="__STATIC__/editor/kindeditor-all.js"></script>
+        <script charset="utf-8" src="__STATIC__/editor/lang/zh-CN.js"></script>
+        <script type="text/javascript">
+             KindEditor.ready(function (K) {
+                window.editor = K.create('#Introduction', {
+                  allowImageUpload: false,
+                  width: '100%',
+                  height: '300px',
+                  items: [
+                    'source', 'justifycenter', 'justifyright', 'insertorderedlist', 'insertunorderedlist', 'fontname', 'fontsize', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline', 'strikethrough', 'image', 'hr', 'emoticons', 'link', 'unlink'
+                  ]
+                });
+              });
+              layui.use('upload', function () {
+                  var upload = layui.upload;
+                  var uploadInst = upload.render({
+                    elem: '#uploadsrc' //绑定元素
+                    , url: '/{$Think.config.admin_url}/index/uploadimg' //上传接口
+                    , done: function (res) {
+                      a = res.data;
+                      $("#image").val('{$siteinfo.siteurl}' + a.src);
+                      layer.msg('上传成功')
+                    }
+                    , error: function () {
+                      layer.msg('上传失败')
+                    }
+                  });
+                });
+        </script>
+{/block}

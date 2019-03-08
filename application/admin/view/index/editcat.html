@@ -1,0 +1,61 @@
+{extend name="index" /}
+{block name="title"}
+修改分类
+{/block}
+{block name="body"}
+<form class="layui-form" action="/{$Think.config.admin_url}/index/posteditcat" style="margin-top:20px" method="post">
+    <div class="layui-form-item">
+            <label class="layui-form-label">分类编号</label>
+            <div class="layui-input-inline">
+              <input type="text" class="layui-input" value="{$res.id}" disabled> <input type="hidden" name="id" class="layui-input" value="{$res.id}">
+            </div>
+          </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">分类名</label>
+          <div class="layui-input-inline">
+            <input type="text" name="name" placeholder="请输入分类名" class="layui-input" value="{$res.name}">
+          </div><div class="layui-form-mid layui-word-aux">必填</div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">分类简称</label>
+          <div class="layui-input-inline">
+            <input type="text" name="abridge" placeholder="字母或者数字" class="layui-input" value="{$res.abridge}">
+          </div><div class="layui-form-mid layui-word-aux">必填</div>
+        </div>
+        <div class="layui-form-item">
+                <label class="layui-form-label">分类图片</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="image" id="image" placeholder="请输入带http://的图片链接" class="layui-input" value="{$res.image}">
+                </div><button type="button" class="layui-btn layui-btn-danger" id="uploadsrc">上传图片</button>
+              </div>
+              <div class="layui-form-item">
+                  <label class="layui-form-label">分类排序</label>
+                  <div class="layui-input-inline">
+                    <input type="number" name="sort" placeholder="数字" class="layui-input" value="{$res.sort}">
+                  </div>
+                </div>
+              <div class="layui-form-item">
+                    <div class="layui-input-block">
+                      <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                      <a class="layui-btn layui-btn-normal" href="/{$Think.config.admin_url}/index/category.html">返回</a>
+                    </div>
+                  </div>
+        </form>
+        <script>
+          layui.use('upload', function () {
+            var upload = layui.upload;
+            var uploadInst = upload.render({
+              elem: '#uploadsrc' //绑定元素
+              , url: '/{$Think.config.admin_url}/index/uploadimg' //上传接口
+              , done: function (res) {
+                a = res.data;
+                $("#image").val('{$siteinfo.siteurl}' + a.src);
+                layer.msg('上传成功')
+              }
+              , error: function () {
+                layer.msg('上传失败')
+              }
+            });
+          });
+        </script>
+{/block}

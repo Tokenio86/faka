@@ -1,0 +1,78 @@
+{extend name="index" /}
+{block name="body"}
+<form action="" method="post"  class="layui-form">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+      <legend>选择支付接口</legend>
+    </fieldset>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">支付接口</label>
+    <div class="layui-input-block">
+      <input type="radio" name="paytype" value="1" title="码支付" {if condition="($res.paytype == 1)"}checked=""{/if}>
+      <input type="radio" name="paytype" value="0" title="易支付" {if condition="($res.paytype == 0)"}checked=""{/if}>
+    </div>
+  </div>
+  <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+    <legend>易支付配置</legend>
+  </fieldset>
+<div class="layui-form-item">
+    <label class="layui-form-label">商户ID</label>
+    <div class="layui-input-inline">
+      <input type="text" name="partner" value="{$res.partner}" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+      <label class="layui-form-label">商户key</label>
+      <div class="layui-input-inline">
+        <input type="password" name="key" value="{$res.key}" class="layui-input">
+      </div>
+      <div class="layui-form-mid layui-word-aux"><a href="http://www.yi66.cn/" target="_blank">申请云支付接口</a></div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">支付API</label>
+      <div class="layui-input-inline">
+        <input type="text" name="payapi" value="{$res.payapi}" class="layui-input">
+      </div>
+      <div class="layui-form-mid layui-word-aux">以斜杠'/'结尾</div>
+    </div>
+  <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+    <legend>码支付配置</legend>
+  </fieldset>
+  <div class="layui-form-item">
+    <label class="layui-form-label">商户ID</label>
+    <div class="layui-input-inline">
+      <input type="text'" name="mzfid" value="{$res.mzfid}" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">通信密匙</label>
+    <div class="layui-input-inline">
+      <input type="password" name="mzfkey" value="{$res.mzfkey}" class="layui-input">
+    </div>
+    <div class="layui-form-mid layui-word-aux">
+      <a href="https://codepay.fateqq.com" target="_blank">申请码支付接口</a>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">token</label>
+    <div class="layui-input-inline">
+      <input type="password" name="mzftoken" value="{$res.mzftoken}" class="layui-input">
+    </div>
+  </div>
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+      </div>
+    </div>
+</form>
+  <script>
+        layui.use('element', function(){
+                var element = layui.element;
+                
+                //一些事件监听
+                element.on('tab(demo)', function(data){
+                  console.log(data);
+                });
+              });
+        </script>
+{/block}

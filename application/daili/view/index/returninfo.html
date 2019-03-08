@@ -1,0 +1,38 @@
+{extend name="base" /} 
+{block name="content"}
+<div style="margin-top:20px;color:green;font-size:30px">提卡成功,您的卡密信息如下</div>
+<table class="layui-table">
+
+
+    <tr>
+        <td>订单编号</td>
+        <td>{$order.ddid}</td>
+    </tr>
+    <tr>
+        <td>商品名称</td>
+        <td>{$order.name}</td>
+    </tr>
+    <tr>
+        <td>支付价格</td>
+        <td>{$order.price}</td>
+    </tr>
+    <tr>
+        <td>购买数量</td>
+        <td>{$order.count}件</td>
+    </tr>
+    <tr>
+        <td>卡密信息</td>
+        <td style="color:red">
+             {foreach $km as $kminfo}
+            <span>{$kminfo.kahao}&nbsp;&nbsp;&nbsp;{$kminfo.mima}
+                <br>
+            </span>
+            {/foreach}
+        </td>
+    </tr>
+
+
+
+</table>
+<div style="margin-top:20px;color:green;font-size:30px;text-align:center"><a href="/daili.php/index/index">返回代理首页</a></div>
+{/block}

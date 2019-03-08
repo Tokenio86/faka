@@ -1,0 +1,25 @@
+{extend name="index" /}
+{block name="body"}
+<blockquote class="layui-elem-quote">新用户用户名与密码一致</blockquote>
+<form class="layui-form" action="" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户名</label>
+        <div class="layui-input-inline">
+        <input type="text" name="username" lay-verify="username" autocomplete="off" placeholder="字母或数字" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">用户名不支持修改</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">邮箱</label>
+        <div class="layui-input-inline">
+            <input type="email" name="email" lay-verify="email" autocomplete="off" placeholder="请输入邮箱" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="demo1">立即添加</button>
+        </div>
+    </div>
+
+</form>
+{/block}

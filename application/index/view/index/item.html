@@ -1,0 +1,26 @@
+{extend name="base" /}
+{block name="title"}
+{$title}
+{/block}
+{block name="content"}
+<table class="layui-table">
+        <thead>
+          <tr>
+            <th>商品标题</th>
+            <th>单价</th>
+            
+            <th>操作</th>
+          </tr> 
+        </thead>
+        <tbody>
+        {foreach $res as $good}
+          <tr>
+            <td>{$good.name}</td>
+            <td>{$good.price}</td>
+            
+            <td><a href="/trade/{$good.id}.html" class="layui-btn layui-btn-danger layui-btn-small"><i class="layui-icon">&#xe698;</i>购买</a></td>
+          </tr>
+          {/foreach}
+        </tbody>
+      </table>
+{/block}

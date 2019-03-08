@@ -1,0 +1,99 @@
+{extend name="index" /}
+{block name="title"}
+分类管理
+{/block}
+{block name="body"}
+<div class="demoTable">
+  <div class="layui-inline">
+    <input class="layui-input" name="id" id="demoReload" autocomplete="off" placeholder="分类名称/分类简称">
+  </div>
+  <button class="layui-btn" data-type="reload">查询</button>
+</div>
+<table class="layui-hide" id="category" lay-filter="demo"></table>
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script>
+  layui.use('table', function () {
+    var table = layui.table;
+    
+    table.render({
+      elem: '#category'
+      , url: '/{$Think.config.admin_url}/index/categorydata'
+      , cellMinWidth: 80
+      , skin: 'row'
+      , even: true
+      , cols: [[
+        { field: 'id', title: 'ID', sort: true, align: 'center' }
+        , { field: 'name', title: '分类名称', align: 'center' }
+        , { field: 'abridge', title: '分类简称', align: 'center' }
+        , { field: 'image', title: '分类图片', sort: true, align: 'center' }
+        , { field: 'sort', title: '排序', align: 'center' }
+        , { width: 178, align: 'center', toolbar: '#barDemo' }
+      ]]
+      , page: true
+      , limit: 20
+    });
+  table.on('tool(demo)', function (obj) {
+      var tbdata = obj.data;
+     if (obj.event === 'del') {
+        layer.confirm('真的删除分类么', function (index) {
+          //del star
+          $.ajax({
+            type: "POST",
+            url: "/{$Think.config.admin_url}/index/delcat.html",
+            data: 'id=' + tbdata.id,
+            success: function (data) {
+              if (data == "0") {
+                layer.msg('删除失败,该分类下存在商品');
+              } else if (data == "1") {
+                 layer.msg('删除成功');
+                obj.del();
+              } else if (data == "2") {
+                layer.msg('删除失败');
+              }
+            }
+          });
+          //del end
+          layer.close(index);
+        });
+      } else if (obj.event === 'edit') {
+        window.location.href='/{$Think.config.admin_url}/index/editcat.html?id='+ tbdata.id;
+      }
+    });
+    var $ = layui.$, active = {
+      reload: function () {
+        var demoReload = $('#demoReload');
+
+        //执行重载
+        table.reload('category', {
+          page: {
+            curr: 1 //重新从第 1 页开始
+          }
+          , where: {
+            keyword: demoReload.val()
+          }
+        });
+      }
+    };
+    $('.demoTable .layui-btn').on('click', function () {
+      var type = $(this).data('type');
+      active[type] ? active[type].call(this) : '';
+    });
+  });
+function lookimg(img){
+  // alert(img.src);
+  layer.open({
+    type: 1,
+    title: false,
+    closeBtn: 0,
+    area: '516px',
+    shadeClose: true,
+    content:'<img style="width:100%" src="'+ img.src+'">'
+  });
+}
+
+</script>
+
+{/block}

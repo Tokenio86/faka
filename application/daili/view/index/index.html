@@ -1,0 +1,179 @@
+{extend name="base" /}
+{block name="content"}
+
+
+<div class="layui-row">
+    <blockquote class="layui-elem-quote">
+        若下拉列表中不显示商品分类或商品名称，请刷新页面看看
+    </blockquote>
+    <div class="layui-col-xs12 layui-col-md12">
+       <div style="background-color:#fff;padding:20px">
+        <div class="layui-row">
+        <div class="layui-col-xs12 layui-col-md4" style="text-align:center;padding:10px">
+            <div class="layui-inline">
+                <img src="http://file.setotoo.cn/168.jpg" class="layui-circle">
+            </div>
+            
+            <p>代理编号:{$dailifinfo.id}</p>
+            <a class="layui-btn layui-btn-sm layui-btn-radius layui-btn-danger" href="/daili.php/index/xgmm.html">修改密码</a><a class="layui-btn layui-btn-sm layui-btn-radius layui-btn-danger" href="/daili.php/index/loginout.html">退出登录</a>
+        </div>
+        <div class="layui-col-xs12 layui-col-md8" style="text-align:center">
+            <table class="layui-table">
+                <tbody>
+                    <tr>
+                        <td>账户余额</td>
+                        <td>{$dailifinfo.money}元<a href="/daili.php/index/chongzhi.html" class="layui-btn layui-btn-xs layui-btn-radius layui-btn-danger" style="margin-left:10px">
+                            账户充值</a></td>
+                    </tr>
+                    <tr>
+                        <td>代理等级</td>
+                        <td>{$dailifinfo.level}</td>
+                    </tr>
+                    <tr>
+                        <td>消费金额</td>
+                        <td>累积{$dl_xf}元</td>
+                    </tr>
+                    <tr>
+                        <td>提货数量</td>
+                        <td>累积{$dl_xl}张<a href="/daili.php/index/tkjl.html?page=1" class="layui-btn layui-btn-xs layui-btn-radius layui-btn-danger" style="margin-left:10px">
+                            提卡记录</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+       
+
+
+        </div>
+       </div>
+    <div style="background-color:#fff;margin-top:10px;padding:20px">
+        <form class="layui-form" onsubmit="return checkform()" method="post" action="/daili.php/index/pay">
+    <div class="layui-form-item">
+        <label class="layui-form-label">选择分类</label>
+        <div class="layui-input-block">
+            <select name="cat" lay-filter="cat" id="cat">
+                <option value="">请选择分类</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">选择商品</label>
+        <div class="layui-input-block">
+            <select name="good" lay-filter="good" id="good">
+                <option value="">请选择商品</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">代理价格</label>
+        <div class="layui-input-inline">
+            <p id="price" style="padding:9px">0元/张</p>
+        </div><div class="layui-form-mid layui-word-aux">原价：<span id="yuanjia"></span></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">商品库存</label>
+        <div class="layui-input-inline">
+            <p id="kucun" style="padding:9px">0</p><input type="hidden" id="kucun_hidden" value="">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">提卡数量</label>
+        <div class="layui-input-inline">
+            <input type="text" id="count" name="count" lay-verify="count" autocomplete="off" class="layui-input" value="1">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="submit">立即提卡</button>
+        </div>
+    </div>
+</form>
+
+    </div>
+    </div> 
+</div>
+<script>
+    var form;
+    layui.use('form', function () {
+        form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+         form.on('select(cat)', function (data) {
+                $.ajax({
+                 url: '/daili.php/index/gooddata.html',
+                 type: 'GET',
+                 data: 'abridge='+data.value,
+                 success: function (data) {
+                     var goodstr="<option value=''>请选择商品</option>";
+                     $.each(data, function (key, value) {  //循环遍历后台传过来的json数据 
+                       goodstr += '<option value="'+value.id+'">' + value.name +'</option>'
+                     });
+                     $("#good").html(goodstr);
+                    form.render('select');
+                 }
+             });
+            });
+            form.on('select(good)', function (data) {
+                    $.ajax({
+                        url: '/daili.php/index/goodinfo.html',
+                        type: 'GET',
+                        data: 'id=' + data.value,
+                        success: function (data) {
+                            $("#price").html(data.price+'元/张');
+                            $("#yuanjia").html(data.yuanjia+'元/张');
+                            $("#kucun").html(data.kucun);
+                            $("#kucun_hidden").val(data.kucun);
+                            form.render('select');
+                        }
+                    });
+                });
+    });
+    $(function () {
+        $.ajax({
+            url: '/daili.php/index/catdata.html',
+            type: 'GET',
+            data: '',
+            success: function (data) {
+                $.each(data, function (key, value) {  //循环遍历后台传过来的json数据  
+                    $("#cat").append('<option value="' + value.abridge + '">' + value.name + '</option>');
+                });
+                        form.render('select'); 
+            }
+
+        });
+    });
+  function checkform(){
+      if($("#good").val()==""){
+          layer.alert('请选择商品', { icon: 2 });
+          return false;
+      }
+      var count= $("#count").val();
+      var kucun= $("#kucun_hidden").val();
+        count = parseInt(count);
+        kucun = parseInt(kucun);
+        if(count > kucun){
+            layer.alert('提卡数量大于库存量', { icon: 2 });
+            return false;
+        }
+  }
+  function tkjl(){
+      layer.open({
+          type: 2,
+          title: '提卡记录',
+          shadeClose: true,
+          shade: 0.8,
+          area: ['90%', '90%'],
+          content: '/daili.php/index/tkjl.html' //iframe的url
+      }); 
+  }
+  function xgmm() {
+     
+        layer.open({
+            type: 2,
+            title: '修改密码',
+            shadeClose: true,
+            shade: 0.8,
+            area: ['90%', '90%'],
+            content: '/daili.php/index/xgmm.html' //iframe的url
+        });
+    }
+    </script>
+{/block}

@@ -1,0 +1,81 @@
+{extend name="index" /}
+{block name="title"}
+订单列表
+{/block}
+{block name="body"}
+<div class="demoTable">
+  <div class="layui-inline">
+    <input class="layui-input"  id="demoReload" autocomplete="off" placeholder="订单号/联系方式">
+  </div>
+  <button class="layui-btn" data-type="reload">查询</button>
+  <!-- <button class="layui-btn" data-type="getCheckData">获取选中行数据</button> -->
+</div>
+<table class="layui-hide" id="order" lay-filter="order"></table>
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="detail"><i class="layui-icon">&#xe615;</i>详情</a>
+</script>
+<script>
+  layui.use('table', function () {
+    var table = layui.table;
+    table.render({
+      elem: '#order'
+      , url: '/{$Think.config.admin_url}/index/orderdata'
+      , cellMinWidth: 20
+      , skin: 'row'
+      , even: true
+      , cols: [[
+          //  { type: 'checkbox', fixed: 'left'}
+          { field: 'ddid',  title: '订单号', sort: true, align: 'center' }
+         , { field: 'name',  title: '商品名称', align: 'center' }
+         , { field: 'time',  title: '交易时间' , align: 'center'}
+         , { field: 'count',  title: '数量', sort: true , align: 'center'}
+         , { field: 'email',  title: '购买者信息' , align: 'center'}
+         , { field: 'type',  title: '支付方式', align: 'center' }
+         , { field: 'status', title: '状态', align: 'center' }
+         , { fixed: '', title: '详情', align: 'center', toolbar: '#barDemo' }
+      ]]
+      , page: true
+      , limit:20
+    });
+    table.on('tool(order)', function (obj) {
+      var data = obj.data;
+      if (obj.event === 'detail') {
+        $.ajax({
+          url: '/{$Think.config.admin_url}/index/orderdetail.html',
+          type: 'GET',
+          data: 'ddid=' + data.ddid,
+          success: function (data) {
+           layer.alert(data);
+          }
+        });
+        
+      }
+    });
+    var $ = layui.$, active = {
+        reload: function () {
+          var demoReload = $('#demoReload');
+          //执行重载
+          table.reload('order', {
+            page: {
+              curr: 1 //重新从第 1 页开始
+            }
+            , where: {
+                keyword: demoReload.val()
+            }
+          });
+        }
+      //   , getCheckData: function () { //获取选中数据
+      //   var checkStatus = table.checkStatus('order')
+      //     , dataok = checkStatus.data;      
+      //   layer.alert(data_tatal);
+      // }
+
+      };
+      $('.demoTable .layui-btn').on('click', function () {
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+      });
+  });
+
+</script>
+{/block}

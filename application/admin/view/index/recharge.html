@@ -1,0 +1,57 @@
+{extend name="index" /}
+{block name="title"}
+分类管理
+{/block}
+{block name="body"}
+<div class="demoTable">
+    <div class="layui-inline">
+      <input class="layui-input" name="id" id="demoReload" autocomplete="off" placeholder="代理编号">
+    </div>
+    <button class="layui-btn" data-type="reload">查询</button>
+  </div>
+  <table class="layui-hide" id="recharge" lay-filter="demo"></table>
+  <script>
+    layui.use('table', function () {
+      var table = layui.table;
+      
+      table.render({
+        elem: '#recharge'
+        , url: '/{$Think.config.admin_url}/index/rechargedata'
+        , cellMinWidth: 80
+        , skin: 'row'
+        , even: true
+        , cols: [[
+            { field: 'id', title: '订单号',  align: 'center' }
+          , { field: 'dailiid', title: '代理ID',  align: 'center' }
+          , { field: 'money', title: '金额', align: 'center' }
+          , { field: 'type', title: '支付方式', align: 'center' }
+          , { field: 'time', title: '充值时间',  align: 'center' }
+          , { field: 'status', title: '状态',  align: 'center' }
+        ]]
+        , page: true
+        , limit: 20
+      });
+      var $ = layui.$, active = {
+        reload: function () {
+          var demoReload = $('#demoReload');
+  
+          //执行重载
+          table.reload('recharge', {
+            page: {
+              curr: 1 //重新从第 1 页开始
+            }
+            , where: {
+              keyword: demoReload.val()
+            }
+          });
+        }
+      };
+      $('.demoTable .layui-btn').on('click', function () {
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+      });
+    });
+
+  
+  </script>
+{/block}

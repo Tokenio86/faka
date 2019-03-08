@@ -1,0 +1,175 @@
+{extend name="base" /}
+{block name="title"}
+{$goodinfo.name}
+{/block}
+{block name="content"}
+<div class="gonggao">
+        {$siteinfo.goodgg}
+</div>
+<script>
+        $(function(){
+            if($("#kucun").val()==0){
+                $("#paysubmit").attr("class", 'layui-btn layui-btn-big layui-btn-disabled'); 
+                $("#paysubmit").attr("disabled", true); 
+                $("#paysubmit").html("<i class='layui-icon'>&#xe698;</i>库存不足");    
+            }
+        });
+    </script>
+<div class="good-trade">
+<form action="/index/pay" class="layui-form layui-form-pane" method="post" onsubmit="return checkform()" style="padding:10px">
+
+<fieldset class="layui-elem-field">
+        <legend>商品信息</legend>
+                <div class="layui-row">
+                                <div class="layui-col-xs12 layui-col-md4 trade-goodimg" >
+                                                <div class="layui-field-box">
+                                                       <p><img src="{$goodinfo.images}" alt="" height="300px" width="100%"></p>
+                                                       <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more">分享到：</a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{"bdSize":16}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+                                                </div>
+                                </div>
+                                <div class="layui-col-xs12 layui-col-md8">
+                                  
+                                                <div class="layui-field-box">
+                                                <input type="hidden" value="{$goodinfo.id}" name="goodid">
+                                                <p><span class="trade-goodname">{$goodinfo.name}</span></p><hr>
+                                                <p class="trade-goodinfo">
+                                                        <span style="color:#6c6c6c">价格：</span>
+                                                        <span class="trade-price">¥{$goodinfo.price}</span>
+                                                        
+                                                        <span style="float:right">
+                                                                <span style="color: #6C6C6C;">累积销量：</span>
+                                                                <span style="color:#6c6c6c;font-size:18px;">{$goodinfo.sales}</span>
+                                                        </span><br>
+                                                        <span style="color:#6C6C6C">库存：{$kucun}件</span><br>
+                                                        <span style="color:#6C6C6C">优惠：满{$goodinfo.mansl}件{$goodinfo.yhprice}元/件</span>
+                                                        
+                                                </p>
+                                                                 
+                                                <script>
+                                                       function checkform(){
+                                                               var email = $("#email").val();
+                                                               if(!email){
+                                                                       layer.alert('请输入联系方式', {icon: 2});
+                                                                       return false;
+                                                               }else if(email.indexOf(" ")!= -1){
+                                                                       layer.alert('邮件中不得含空格', {icon: 2});
+                                                                       return false;
+                                                               }
+                                                               var count=$("#count").val();
+                                                               var kucun=$("#kucun").val();
+                                                               count=parseInt(count);	
+                                                               kucun=parseInt(kucun);	
+                                                               if(count>kucun){
+                                                                layer.alert('购买数量大于库存量', {icon: 2});
+                                                                return false;
+                                                               }
+                                                              
+                                                               
+                                                                
+                                                       }
+                                                       
+                                                       //示范一个公告层
+                                                        
+
+                                                </script>
+                                                 {if condition="($siteinfo.mailon != 1)"}
+                                                <div class="layui-form-item">
+                                                        <label class="layui-form-label">联系方式</label>
+                                                        <div class="layui-input-inline">
+                                                                <input type="text" name="email" id="email" lay-verify="required" placeholder="查卡密用得到" autocomplete="off" class="layui-input">
+                                                        </div>
+                                                </div>
+                                               
+                                                {/if}
+                                                 {if condition="($siteinfo.mailon == 1)"}
+                                                 
+                                        <div class="layui-form-item">
+                                                <label class="layui-form-label">联系邮箱</label>
+                                                <div class="layui-input-inline">
+                                                        <input type="text" name="email" id="email" lay-verify="required" placeholder="卡密自动发送到邮箱" autocomplete="off" class="layui-input">
+                                                </div>
+                                        </div>
+                                               {/if}
+                                        <div class="layui-form-item">
+                                                <label class="layui-form-label">付款方式</label>
+                                                <div class="layui-input-inline">
+                                                        <select name="type">
+                                                         {if condition="($siteinfo.alipay == 1)"}
+                                                        <option value="alipay" selected="">支付宝</option>
+                                                         {/if}
+                                                         {if condition="($siteinfo.wxpay == 1)"}
+                                                        <option value="wxpay">微信</option>
+                                                         {/if}
+                                                         {if condition="($siteinfo.qqpay == 1)"}
+                                                        <option value="qqpay">QQ钱包</option>
+                                                         {/if}
+                                                            </select>
+                                                </div>                                     
+                                                </div>
+                                                <p style="float:left"><input type="text" class="trade-input" value="1" id="count" name="count" style="height:27px;margin-right:5px"></p>
+                                                <button type="submit" class="layui-btn layui-btn-danger layui-btn-big" style="float:left" id="paysubmit"><i class="layui-icon">&#xe698;</i>立即购买</button>
+                                                <a style="line-height:40px;color:#6c6c6c;margin-left:5px" href="#" id="youhuiquan" onclick="youhuiquan()">有优惠券?</a><input type="hidden" value="{$kucun}" id="kucun" name="kucun">
+                                                <input type="hidden" id="maxsl" value="{$siteinfo.maxsl}">
+                                                <input type="hidden" id="input-yhq" value="" name="input-yhq">
+
+                                </div>
+                </div>
+      </fieldset>
+
+
+<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+        <ul class="layui-tab-title">
+                <li class="layui-this">商品描述</li>
+                <!-- <li>商品评价</li> -->
+               
+        </ul>
+        <div class="layui-tab-content" style="">
+                <div class="layui-tab-item layui-show">{$goodinfo.Introduction}</div>
+                <!-- <div class="layui-tab-item">开发中</div> -->
+              
+        </div>
+</div>
+
+
+
+
+
+     
+       
+</form>
+</div>
+<script>
+//注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+layui.use('element', function () {
+var element = layui.element;
+
+//…
+});
+function youhuiquan(){
+        layer.prompt({ title: '请输入优惠券代码', formType: 3 }, function (youhuiquan, index) {
+         $.ajax({
+            type: "POST",
+            url: "/index/getDiscounInfo.html",
+            data: 'quanma=' + youhuiquan,
+            success: function (data) {
+                    if(data){
+                        $("#input-yhq").val(youhuiquan);
+                        data = data*10;
+                        $("#youhuiquan").html(data+'折优惠')
+                    }else{
+                        layer.msg('优惠券不存在或已被使用');
+                    }   
+            }
+          });
+
+          //此处获取优惠券信息
+        
+        layer.close(index);
+        
+        });
+}
+</script>
+<div style="display:none">{$siteinfo.tongji}</div>
+
+{/block}

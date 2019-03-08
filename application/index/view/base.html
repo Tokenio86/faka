@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{block name="title"}首页{/block}-{$siteinfo.sitename}</title>
+    <meta content="{$siteinfo.keywords}" name="Keywords">
+    <meta name="description" content="{$siteinfo.description}" />
+    <link rel="stylesheet" href="__STATIC__/layui/css/layui.css">
+    <link rel="stylesheet" href="__STATIC__/css/style.css">
+    <script src="__STATIC__/layui/layui.js"></script>
+    <script src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+    <script type="text/javascript" src="http://at.alicdn.com/t/font_486278_vzxioem775t81tt9.js"></script>
+    <style type="text/css">
+        .icon {
+            width: 1em;
+            height: 1em;
+            vertical-align: -0.15em;
+            fill: currentColor;
+            overflow: hidden;
+            font-size: 25px
+        }
+    </style>
+</head>
+<script>
+    function searchbtn(){
+        layer.prompt({ title: '请输入订单号或联系方式', formType: 3 }, function (ddid, index) {
+            window.location.href='/search.html?page=1&ddid='+ ddid;
+            
+        });
+        }
+</script>
+<style>
+</style>
+<body>
+    <header style="background-color:#393D49">
+        <div class="layui-container">
+          <ul class="layui-nav" style="border-radius:0; margin-bottom:5px">
+                
+                <li class="layui-nav-item"><a href="/" style="padding:0"><img src="{$siteinfo.logoimg}" alt="{$siteinfo.sitename}" width="150px"></a></li>
+                <li class="layui-nav-item"><a style="color:#FFFFFF;font-size: 16px;" href="http://wpa.qq.com/msgrd?v=3&uin={$siteinfo.qq}&site=qq&menu=yes"><i class="layui-icon" style="font-size: 16px;">&#xe63a;</i>联系客服
+                </a></li>
+                <div style="float:right" class="searchdiv">
+                        <li class="layui-nav-item">
+                            <a onclick="searchbtn()">
+                                <i class="layui-icon" style="font-size: 16px;color:#FFFFFF">&#xe615;订单查询</i>
+                            </a>
+                        </li>
+                </div>       
+                
+              </ul>
+            </div>
+        </header>
+      <div class="layui-container">
+      {block name="content"}内容{/block}
+    </div>
+    <script>
+    layui.use('form', function(){
+    var form = layui.form; 
+    form.render();
+  }); 
+</script>
+</body>
+</html>

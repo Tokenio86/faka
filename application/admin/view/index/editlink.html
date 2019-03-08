@@ -1,0 +1,35 @@
+{extend name="index" /}
+{block name="title"}
+常用设置
+{/block}
+{block name="body"}
+<form action="" method="post">
+       
+                  <input type="hidden" name="id"  value="{$link.id}">
+          
+    <div class="layui-form-item">
+        <label class="layui-form-label">站点名称</label>
+        <div class="layui-input-inline">
+          <input type="text" name="sitename" lay-verify="title" autocomplete="off" value="{$link.sitename}" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item">
+            <label class="layui-form-label">站点地址</label>
+            <div class="layui-input-inline">
+              <input type="text" name="siteurl" lay-verify="title" autocomplete="off" value="{$link.siteurl}" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item">
+                <label class="layui-form-label">排列顺序</label>
+                <div class="layui-input-inline">
+                  <input type="number" name="sort" lay-verify="title" autocomplete="off" value="{$link.sort}" class="layui-input">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                    <div class="layui-input-block">
+                      <button class="layui-btn" lay-submit="" lay-filter="demo1">立即修改</button>
+                      <a class="layui-btn" href="/{$Think.config.admin_url}/index/links.html">返回</a>
+                    </div>
+                  </div>
+                </form>
+{/block}

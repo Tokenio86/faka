@@ -1,0 +1,90 @@
+{extend name="base" /}
+{block name="title"}
+订单查询
+{/block}
+{block name="content"}
+<div style="margin-top:20px;color:green;font-size:30px">您的订单信息如下</div>
+{foreach $orderinfo as $val}
+<table class="layui-table">
+  
+    <tr>
+      <td style="width:30%">订单编号</td><td>{$val.ddid}</td>
+    </tr>
+    <tr>
+      <td>商品名称</td><td>{$val.name}</td>
+    </tr>
+    <tr>
+      <td>下单时间</td>
+      <td>{$val.time}</td>
+    </tr>
+    <tr>
+      <td>支付价格</td><td>{$val.price}元</td>
+    </tr>
+    <tr>
+      <td>购买数量</td><td>{$val.count}件</td>
+    </tr>
+    <tr>
+      <td>联系方式</td>
+      <td>{$val.email}</td>
+    </tr>
+    <tr>
+      <td>卡密信息</td><td style="color:red">
+        <span id="tip-{$val.ddid}"></span>
+      <p id="{$val.ddid}"></p>
+      <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="lookkm('{$val.ddid}')" id="btn-{$val.ddid}">查看卡密</button>
+      <span id="tip2-{$val.ddid}">←点击这里查看您的卡密信息</span>
+      </td>
+    </tr>
+    <tr>
+      <td>支付方式</td><td>{$val.type}</td>
+    </tr>
+    <tr>
+      <td>订单状态</td><td><span id="status-{$val.ddid}">{$val.status}</span></td>
+    </tr>
+</table>
+{/foreach}
+<div id="fenye"></div>
+<script>
+  function lookkm(ddid){
+    $.ajax({
+      url: '/index/kminfo.html',
+      type: 'GET',
+      data: 'ddid=' + ddid,
+      success: function (data) {
+        $("#btn-"+ ddid).remove();
+        $("#tip2-" + ddid).html('');
+        //layer.msg('请稍等~获取中...');
+        $("#tip-" + ddid).html('请稍后~');
+        $.each(data, function (key, value) {  //循环遍历后台传过来的json数据 
+          $("#" + ddid).append(value.kahao  + value.mima + '<br>');
+        });
+        $("#tip-" + ddid).html('');
+        
+      }
+    });
+  }
+  layui.use('laypage', function () {
+      var laypage = layui.laypage;
+
+      //执行一个laypage实例
+      laypage.render({
+        elem: 'fenye' //注意，这里的 test1 是 ID，不用加 # 号
+        ,count: {$count} //数据总数，从服务端得到
+        ,curr: {$Request.get.page}
+        , limit: 5 
+        , jump: function (obj, first) {
+          //obj包含了当前分页的所有参数，比如：
+          //alert(obj.curr)
+          if (!first) {
+             window.location.href = "/search.html?ddid={$Request.get.ddid}&page=" + obj.curr;
+          }
+         
+
+        }
+      });
+    });
+    
+</script>
+
+
+{/block}

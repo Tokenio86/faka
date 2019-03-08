@@ -1,0 +1,31 @@
+{extend name="index" /}
+{block name="title"}
+常用设置
+{/block}
+{block name="body"}
+<form action="" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">站点名称</label>
+        <div class="layui-input-inline">
+          <input type="text" name="sitename" lay-verify="title" autocomplete="off" placeholder="请输入站点名" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item">
+            <label class="layui-form-label">站点地址</label>
+            <div class="layui-input-inline">
+              <input type="text" name="siteurl" lay-verify="title" autocomplete="off" placeholder="请输入站点地址(带http://)" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item">
+                <label class="layui-form-label">排列顺序</label>
+                <div class="layui-input-inline">
+                  <input type="number" name="sort" lay-verify="title" autocomplete="off" placeholder="数字越小越靠前" class="layui-input">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                    <div class="layui-input-block">
+                      <button class="layui-btn" lay-submit="" lay-filter="demo1">立即添加</button>
+                    </div>
+                  </div>
+                </form>
+{/block}

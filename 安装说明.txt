@@ -1,0 +1,12 @@
+服务器环境建议为PHP5.4+、MYSQL5.5+
+
+1、网站上传到根目录
+2、TP.sql导入数据库中
+3、修改数据库连接文件 application/database.php
+    'database'        => 'faka2',  // 用户名
+    'username'        => 'root',   // 密码
+    'password'        => 'root',    // 端口
+
+常见问题解决方案
+邮件自动发送功能在Windows系统服务器上才能正常使用，liunx服务器无法使用。
+支付接口系统集成了忆天云支付（www.yi66.cn）接口，商家申请好的商户ID和卡密写入到后台就可以正常使用支付功能，资金平台会结算给对应账户

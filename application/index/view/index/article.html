@@ -1,0 +1,12 @@
+{extend name="base" /}
+{block name="title"}
+文章
+{/block}
+{block name="content"}
+<div class="good-trade" style="padding:20px">
+   <h2 style="text-align:center">{$res.title}</h2>
+   <p style="text-align:center;color:#999999">{$res.time}</p>
+   <hr>
+   {$res.content}
+</div>
+{/block}

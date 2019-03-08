@@ -1,0 +1,117 @@
+{extend name="index" /}
+{block name="body"}
+<div class="layui-form">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">删未付款</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" value="清理所有未付款订单" disabled>
+            </div>
+            <button class="layui-btn" onclick="clearwfk()">立即清理</button>今日订单不会被删除
+        </div>
+    </div>
+    
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">指定日期</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="time" placeholder="选择时间">
+            </div><button class="layui-btn" onclick="zdtime()">立即清理</button>
+        </div>
+    </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">删未充值</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" value="删除所有代理未付款充值记录" disabled>
+                </div>
+                <button class="layui-btn" onclick="clearwfkcz()">立即清理</button>今日订单不会被删除
+            </div>
+        </div>
+        <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">删充值记录</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" value="删除所有代理充值记录" disabled>
+                    </div>
+                    <button class="layui-btn" onclick="clearcz()">立即清理</button>
+                </div>
+            </div>
+<script>
+   
+    function zdtime() {
+        if(!$("#time").val()){
+            layer.alert("请选择时间范围");
+        }else{
+            layer.confirm('确定清空' + $("#time").val() + '的订单吗', function (index) {
+                $.ajax({
+                    type: "GET",
+                    url: "/{$Think.config.admin_url}/index/cleardata.html",
+                    data: 'oper=zdsj&time=' + $("#time").val(),
+                    success: function (data) {
+                        layer.alert(data);
+                    }
+                });
+
+                layer.close(index);
+            }); 
+        }
+        
+    }
+    function clearwfk(){
+       layer.confirm('确定清空所有未付款订单吗?', function (index) {
+            $.ajax({
+                type: "GET",
+                url: "/{$Think.config.admin_url}/index/cleardata.html",
+                data: 'oper=wfk&time=none',
+                success: function (data) {
+                    layer.alert(data);
+                }
+            });
+
+            layer.close(index);
+        }); 
+    }
+    function clearwfkcz(){
+       layer.confirm('确定清空所有客户的未付款充值记录吗?', function (index) {
+            $.ajax({
+                type: "GET",
+                url: "/{$Think.config.admin_url}/index/cleardata.html",
+                data: 'oper=czjlwfk&time=none',
+                success: function (data) {
+                    layer.alert(data);
+                }
+            });
+
+            layer.close(index);
+        }); 
+    }
+    function clearcz(){
+        layer.confirm('确定清空所有客户的充值记录吗?', function (index) {
+            $.ajax({
+                type: "GET",
+                url: "/{$Think.config.admin_url}/index/cleardata.html",
+                data: 'oper=clearcz&time=none',
+                success: function (data) {
+                    layer.alert(data);
+                }
+            });
+
+            layer.close(index);
+        }); 
+    }
+    layui.use('laydate', function () {
+            var laydate = layui.laydate;
+           //日期范围
+        //日期时间范围
+        laydate.render({
+            elem: '#time'
+            , type: 'datetime'
+            , range: true
+        });
+            });
+
+            //
+           
+</script>
+{/block}

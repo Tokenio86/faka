@@ -1,0 +1,37 @@
+{extend name="base" /}
+{block name="title"}
+购买成功
+{/block}
+{block name="content"}
+<div style="margin-top:20px;color:green;font-size:30px">付款成功,您的卡密信息如下</div>
+<table class="layui-table">
+  
+
+    <tr>
+      <td>订单编号</td><td>{$out_trade_no}</td>
+    </tr>
+    <tr>
+      <td>商品名称</td><td>{$name}</td>
+    </tr>
+    <tr>
+      <td>支付价格</td><td>{$money}元</td>
+    </tr>
+    <tr>
+      <td>购买数量</td><td>{$count}件</td>
+    </tr>
+    <tr>
+      <td>卡密信息</td>
+      <td style="color:red">
+        {foreach $km as $kminfo} 
+        <span>{$kminfo.kahao}&nbsp;&nbsp;&nbsp;{$kminfo.mima}<br></span>
+        {/foreach}
+      </td>
+    </tr>
+   
+    
+ 
+</table>
+
+
+
+{/block}

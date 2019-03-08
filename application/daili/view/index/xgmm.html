@@ -1,0 +1,28 @@
+
+     {extend name="base" /}
+     {block name="content"}
+    <div style="background-color:#fff">
+    <div class="layui-container" style="padding:10px" >
+    <form class="layui-form" action="" method="post" >
+        <div class="layui-form-item">
+            <label class="layui-form-label">原密码</label>
+            <div class="layui-input-inline">
+                <input type="text" name="oldpass" lay-verify="oldpass" autocomplete="off" placeholder="请输入原密码" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">新密码</label>
+            <div class="layui-input-inline">
+                <input type="text" name="newpass" lay-verify="newpass" autocomplete="off" placeholder="请输入新密码" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="demo1">立即修改</button>
+                <a class="layui-btn" href="/daili.php/index/index">返回</a>
+            </div>
+        </div>
+        </form>
+    </div>
+    </div>
+{/block}

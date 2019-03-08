@@ -1,0 +1,115 @@
+{extend name="base" /}
+{block name="content"}
+        <div class="searchdiv2">
+                <button class="layui-btn" onclick="searchbtn()" style="width:100%">订单查询</button>
+        </div>
+       <div class="gonggao">     
+       {$siteinfo.gonggao}
+       </div>
+       <div class="goods">   
+                           {if condition="$siteinfo.indexmode eq '1'"}
+                                <table class="layui-table">
+                                  <thead>
+                                    <tr>
+                                      <th>商品标题</th>
+                                      <th>单价</th>
+                                      <th>库存</th>
+                                      <th style="text-align:center">操作</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                     
+                                     {foreach $res2 as $cat}
+                                     <tr>
+                                       <td colspan="4" style="background-color:#393D49;color:#fff;text-align:center">{$cat.name}</td>
+                                     </tr>
+                                    {foreach $res as $good}
+                                     {if condition="$good.abridge eq $cat.abridge"}
+                                    <tr>
+                                      <td>{$good.name}</td>
+                                      <td>{$good.price}元</td>
+                                      <td>{$good.kucun}件</td>
+                                      <td style="text-align:center">
+                                        <a href="/trade/{$good.id}.html" class="layui-btn layui-btn-danger layui-btn-sm">
+                                          <i class="layui-icon">&#xe698;</i>购买</a>
+                                      </td>
+                                    </tr>
+                                    {/if}
+                                    {/foreach}
+                                     {/foreach}
+                                  </tbody>
+                                </table>
+                          {elseif condition="$siteinfo.indexmode eq '0'"}
+                                 
+                                <div class="layui-row layui-col-space5">
+                                  {foreach $res2 as $cat}
+                                  <div class="layui-col-xs6 layui-col-md3">
+                                    <div class="index-good">
+                                      <a href="/item/{$cat.abridge}.html">
+                                        <div class="index-goodimg">
+                                          <img src="{$cat.image}" alt="" height="100%" width="100%">
+                                        </div>
+                                        <hr>
+                                        <div class="index-goodname">{$cat.name}</div>
+                                      </a>
+                                    </div>
+                                  </div>
+                                  {/foreach}
+                                </div>
+                           {elseif condition="$siteinfo.indexmode eq '2'"}
+                            <div class="layui-row layui-col-space5">
+                              {foreach $res as $good}
+                              <div class="layui-col-xs6 layui-col-md3">
+                                <div class="index-good">
+                                  <a href="/trade/{$good.id}.html">
+                                    <div class="index-goodimg" >
+                                      <img src="{$good.images}" alt="" height="100%" width="100%" style="float:left">
+                                      <div style="position:absolute; z-index:2;right:10px;background-color:#F40;color:#fff;padding:5px">已售{$good.sales}张</div>
+                                    </div>
+                                    
+                                    <div class="pr-info"><span class="price">¥{$good.price}</span><spanp class="pr-xl">库存{$good.kucun}张</span></div>
+                                    <div class="index-goodname-xq"><p title="{$good.name}">{$good.name}</p></div>
+                                  </a>
+                                </div>
+                              </div>
+                              {/foreach}
+                            </div>
+                          {/if}
+                                
+      </div>
+      <fieldset class="layui-elem-field layui-field-title" style="border-color:#000">
+          <legend>友情链接</legend>
+        </fieldset>
+      <div class="layui-row layui-col-space5">
+          {foreach $link as $vo}    
+          <div class="layui-col-xs12 layui-col-md2">   
+              <a class="layui-btn layui-btn-primary" href="{$vo.siteurl}" target="_blank" style="width:100%">{$vo.sitename}</a>      
+        </div>
+          {/foreach}
+        </div>
+        <hr>
+        <div style="text-align:center">{$siteinfo.tongji}</div>
+     <script>
+        layui.use('carousel', function(){
+          var carousel = layui.carousel;
+          //建造实例
+          carousel.render({
+            elem: '#test10'
+            ,width: '100%' //设置容器宽度
+            ,arrow: 'always' //始终显示箭头
+            //,anim: 'updown' //切换动画方式
+          });
+        });
+        layui.use('carousel', function(){
+        var carousel = layui.carousel;
+        //建造实例
+        carousel.render({
+          elem: '#test1'
+          ,width: '100%' //设置容器宽度
+          ,arrow: 'always' //始终显示箭头
+          //,anim: 'updown' //切换动画方式
+        });
+      });
+</script>
+        </script>
+{/block}

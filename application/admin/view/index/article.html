@@ -1,0 +1,87 @@
+{extend name="index" /}
+{block name="title"}
+商品列表
+{/block}
+{block name="body"}
+<div class="demoTable">
+  <div class="layui-inline">
+    <input class="layui-input" id="demoReload" autocomplete="off" placeholder="文章标题/内容">
+  </div>
+  <button class="layui-btn" data-type="reload">查询</button>
+</div>
+<table class="layui-hide" id="article" lay-filter="demo"></table>
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="link">查看</a>
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script>
+  layui.use('table', function () {
+    var table = layui.table
+    table.render({
+      elem: '#article'
+      , url: '/{$Think.config.admin_url}/index/articledata'
+      , cellMinWidth: 80
+      , skin: 'row'
+      , even: true
+      , cols: [[
+        { field: 'id', title: 'ID', sort: true, align: 'center' }
+        , { field: 'title', title: '标题', align: 'center',}
+        , { field: 'time', title: '时间', align: 'center' }
+        , {  align: 'center', toolbar: '#barDemo' }
+        
+      ]]
+      , page: true
+      , limit: 20
+    });
+
+    table.on('tool(demo)', function (obj) {
+      var tbdata = obj.data;
+      if (obj.event === 'del') {
+        layer.confirm('真的删除此文章吗', function (index) {
+          //del star
+          $.ajax({
+            type: "POST",
+            url: "/{$Think.config.admin_url}/index/delart.html",
+            data: 'id=' + tbdata.id,
+            success: function (data) {
+                
+                layer.msg(data);
+                obj.del();
+            }
+          });
+          //del end
+          layer.close(index);
+        });
+      } else if (obj.event === 'edit') {
+        window.location.href = '/{$Think.config.admin_url}/index/editart.html?id=' + tbdata.id;
+      } else if (obj.event === 'link') {
+          window.open('/article/'+ tbdata.id+'.html');
+      } 
+    });
+    var $ = layui.$, active = {
+      reload: function () {
+        var demoReload = $('#demoReload');
+
+        //执行重载
+        table.reload('article', {
+          page: {
+            curr: 1 //重新从第 1 页开始
+          }
+          , where: {
+            keyword: demoReload.val()
+          }
+        });
+      }
+    };
+    $('.demoTable .layui-btn').on('click', function () {
+      var type = $(this).data('type');
+      active[type] ? active[type].call(this) : '';
+    });
+  });
+  
+
+
+</script>
+
+{/block}

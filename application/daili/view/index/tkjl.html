@@ -1,0 +1,75 @@
+{extend name="base" /}
+{block name="content"}
+
+    <div class="layui-container">
+        <a class="layui-btn layui-btn-primary" style="width:100%" href="/daili.php/index/index">返回代理首页</a>
+        {foreach $orderinfo as $val}
+    <table class="layui-table">
+        <tbody>
+            <tr>
+                <td style="width:30%">订单号</td>
+                <td>{$val.ddid}</td>
+            </tr>
+            
+            <tr>
+                <td>商品名称</td>
+                <td>{$val.name}</td>
+            </tr>
+            <tr>
+                <td>提卡日期</td>
+                <td>{$val.time}</td>
+            </tr>
+            <tr>
+                <td>订单价格</td>
+                <td>{$val.price}元</td>
+            </tr>
+            <tr>
+                <td>提卡数量</td>
+                <td>{$val.count}件</td>
+            </tr>
+            <tr>
+                <td>卡密信息</td>
+                <td><p id="{$val.ddid}" style="color:red"></p><button class="layui-btn layui-btn-primary layui-btn-small" onclick="lookkm('{$val.ddid}')" id="btn-{$val.ddid}">查看卡密</button></td>
+            </tr>
+        </tbody>
+    </table>
+     {/foreach}
+    <div id="fenye"></div>
+    </div>
+    <script>
+        layui.use('laypage', function () {
+                var laypage = layui.laypage;
+
+                //执行一个laypage实例
+                laypage.render({
+                    elem: 'fenye' //注意，这里的 test1 是 ID，不用加 # 号
+                    , count: {$tkjl_count} //数据总数，从服务端得到
+                    , curr: {$Request.get.page}
+                    , limit: 5
+                    , jump: function (obj, first) {
+                        //obj包含了当前分页的所有参数，比如：
+                        //alert(obj.curr)
+                        if (!first) {
+                            window.location.href = "/daili.php/index/tkjl.html?page=" + obj.curr;
+                        }
+
+
+                    }
+                });
+            });
+        function lookkm(ddid){
+            $.ajax({
+                url: '/daili.php/index/kminfo.html',
+                type: 'GET',
+                data: 'ddid=' + ddid,
+                success: function (data) {
+                   $.each(data, function (key, value) {  //循环遍历后台传过来的json数据 
+                        $("#"+ddid).append(value.kahao+'&nbsp;&nbsp;'+value.mima+'<br>');
+                    });
+                     $("#btn-" + ddid).remove();
+                }
+            });
+        }
+    </script>
+
+{/block}

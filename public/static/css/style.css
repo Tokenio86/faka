@@ -1,0 +1,95 @@
+ .gonggao{
+       margin-top: 5px;
+       text-align: center;
+   }
+   .goods{
+       margin-top: 10px;
+   }
+   .good-trade{
+       background-color: #fff;
+   }
+   .good-trade p{
+        font-size: 15px;
+         line-height: 30px;  
+   }
+  
+   @media screen and (max-width:550px){
+            .searchdiv{
+                display:none;
+            }
+            .searchdiv2{
+                display:inline
+            }
+            .index-goodimg{
+             height:190px;
+            }
+            .trade-goodimg{
+                display:none;
+            }
+        }
+    @media screen and (min-width:550px){
+        .searchdiv{
+            display:inline;
+        }
+        .searchdiv2{
+            display:none;
+        }
+        .index-goodimg{
+             height:250px;
+         }
+         .trade-goodimg{
+            display:inline
+        }
+    }
+    body{
+        background-color: #e2e2e2;
+    }
+    .index-good{
+        padding:10px;background-color:#fff
+    }
+    .price{
+       font-size: 18px;
+       color: #F40;
+       font-weight: 700;
+       /* text-align:left */
+    }
+    .pr-info{
+        margin-top: 10px
+    }
+    .pr-xl{
+       color:#888;
+       float: right;
+    }
+    .index-goodname{
+    text-align:center;
+    font-size:15px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    }
+    .index-goodname-xq{
+    font-weight: 400;
+    margin-top: 5px;
+    font-size:15px;
+    word-wrap:break-word;  
+    word-break:break-all;  
+    overflow: hidden;
+    height:40px
+    }
+   
+    .trade-goodname{
+        font-size:20px;color:#3C3C3C;
+    }
+    .trade-goodinfo{
+        background-color:#FFF2E8;padding:10px;
+        margin-bottom: 5px;
+    }
+    .trade-price{
+        color:#F40;;font-size: 26px;font-weight: 700;
+    }
+    .trade-input{
+        text-align:center;height:20px;width:50px;border: 1px solid #e6e6e6;border-radius: 2px;padding:5px
+    }
+    .trade-email{
+        height:20px;width:150px;border: 1px solid #e6e6e6;border-radius: 2px;padding:5px
+    }

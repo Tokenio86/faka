@@ -1,0 +1,23 @@
+{extend name="index" /}
+{block name="body"}
+<form class="layui-form" action="" method="post">
+    <div class="layui-form-item">
+    <label class="layui-form-label">生成数量</label>
+    <div class="layui-input-inline">
+        <input type="text" name="shuliang" placeholder="请输入生成数量" class="layui-input">
+    </div><div class="layui-form-mid layui-word-aux">张</div>
+    </div>
+    <div class="layui-form-item">
+    <label class="layui-form-label">优惠力度</label>
+    <div class="layui-input-inline">
+        <input type="text" name="discount" placeholder="请输入优惠力度" class="layui-input">
+    </div><div class="layui-form-mid layui-word-aux">张 输入0.9就是九折</div>
+    </div>
+    <div class="layui-form-item">
+            <div class="layui-input-block">
+              <button class="layui-btn" lay-submit="" lay-filter="demo1">立即生成</button>
+              
+            </div>
+          </div>
+</form>
+{/block}

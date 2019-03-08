@@ -1,0 +1,76 @@
+{extend name="index" /}
+{block name="title"}
+后台首页
+{/block}
+{block name="body"}
+    <div class="layui-row">
+        <div class="layui-col-xs6 layui-col-md3">
+          <div style="padding:5px">
+              <div style="background-color:#23b7e5;text-align:center;border-radius:0;padding:5px;height:75px">
+                  <div style="font-size:36px;color:#fff;font-weight: 300;">{$order}笔</div><span style="color:#b0e1f1">总订单</span>
+                </div>       
+        </div>
+        </div>
+        <div class="layui-col-xs6 layui-col-md3">
+                <div style="padding:5px">
+                    <div style="background-color:#23b7e5;text-align:center;border-radius:0;padding:5px;height:75px">
+                        <div style="font-size:36px;color:#fff;font-weight: 300;">{$category}个</div><span style="color:#b0e1f1">总分类</span>
+                      </div>       
+              </div>
+              </div>
+    <div class="layui-col-xs6 layui-col-md3">
+        <div style="padding:5px">
+            <div style="background-color:#23b7e5;text-align:center;border-radius:0;padding:5px;height:75px">
+                <div style="font-size:36px;color:#fff;font-weight: 300;">{$good}个</div><span style="color:#b0e1f1">在售商品</span>
+                </div>       
+        </div>
+        </div>
+        <div class="layui-col-xs6 layui-col-md3">
+            <div style="padding:5px">
+                <div style="background-color:#23b7e5;text-align:center;border-radius:0;padding:5px;height:75px">
+                    <div style="font-size:36px;color:#fff;font-weight: 300;">{$kami}张</div><span style="color:#b0e1f1">库存卡密</span>
+                    </div>       
+            </div>
+            </div>
+            <div class="layui-col-xs6 layui-col-md3">
+                    <div style="padding:5px">
+                        <div style="background-color:#23b7e5;text-align:center;border-radius:0;padding:5px;height:75px">
+                            <div style="font-size:36px;color:#fff;font-weight: 300;">{$todyorder}笔</div><span style="color:#b0e1f1">今日订单</span>
+                            </div>       
+                    </div>
+                    </div>
+            <div class="layui-col-xs6 layui-col-md3">
+                    <div style="padding:5px">
+                        <div style="background-color:#23b7e5;text-align:center;border-radius:0;padding:5px;height:75px">
+                            <div style="font-size:36px;color:#fff;font-weight: 300;">{$todybuyok}笔</div><span style="color:#b0e1f1">今日已付款</span>
+                            </div>       
+                    </div>
+                    </div>
+            <div class="layui-col-xs6 layui-col-md3">
+                    <div style="padding:5px">
+                        <div style="background-color:#23b7e5;text-align:center;border-radius:0;padding:5px;height:75px">
+                            <div style="font-size:36px;color:#fff;font-weight: 300;">¥{$todymoney}</div><span style="color:#b0e1f1">今日收入</span>
+                            </div>       
+                    </div>
+                    </div>
+            <div class="layui-col-xs6 layui-col-md3">
+                    <div style="padding:5px">
+                        <div style="background-color:#23b7e5;text-align:center;border-radius:0;padding:5px;height:75px">
+                            <div style="font-size:36px;color:#fff;font-weight: 300;">¥{$totalmoney}</div><span style="color:#b0e1f1">总收入</span>
+                            </div>       
+                    </div>
+                    </div>
+        
+    
+      </div>
+      <blockquote class="layui-elem-quote layui-quote-nm">
+        程序版本：v2.6.3&nbsp;&nbsp; 忆天云支付平台自动发卡网
+        
+        <br></span>
+      </blockquote>
+      <blockquote class="layui-elem-quote layui-quote-nm">
+        <div style="color:#009688;font-size:15px;">欢迎您使用忆天云支付平台自动发卡系统，程序用途广泛，个人或商家可以用来销售自己的产品，如程序的计费(充值卡密），游戏充值等（在线发卡，全自动，省去不少时间），本系统由thinkphp5+layui2.2开发，服务器环境建议为PHP5.4+、MYSQL5.5+，技术支持邮箱yitian@yi66.net.</div>
+    </div>
+      </blockquote>
+
+{/block}

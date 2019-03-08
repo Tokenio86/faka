@@ -1,0 +1,105 @@
+{extend name="index" /}
+{block name="title"}
+商品列表
+{/block}
+{block name="body"}
+<div class="demoTable">
+  <div class="layui-inline">
+    <input class="layui-input" id="demoReload" autocomplete="off" placeholder="商品名称">
+  </div>
+  <button class="layui-btn" data-type="reload">查询</button>
+</div>
+<table class="layui-hide" id="good" lay-filter="demo"></table>
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="link">链接</a>
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="delkm">清空卡密</a>
+</script>
+<script>
+  layui.use('table', function () {
+    var table = layui.table
+    table.render({
+      elem: '#good'
+      , url: '/{$Think.config.admin_url}/index/gooddata'
+      , cellMinWidth: 80
+      , skin: 'row'
+      , even: true
+      , cols: [[
+        { field: 'id', title: 'ID', sort: true, align: 'center' }
+        , { field: 'name', title: '名称', align: 'center',}
+        , { field: 'abridge', title: '分类', align: 'center' }
+        , { field: 'price', title: '价格/元', sort: true, align: 'center' }
+        , { field: 'dailiprice', title: '代理价格/元', sort: true, align: 'center' }
+        , { field: 'status', title: '状态',  sort: true,align: 'center' }
+        , { field: 'kucun', title: '库存/张', sort: true,align: 'center' }
+        , { field: 'sales', title: '已售/张', sort: true,align: 'center' }
+        , {   width: 250, align: 'center', toolbar: '#barDemo' }
+        
+      ]]
+      , page: true
+      , limit: 20
+    });
+
+    table.on('tool(demo)', function (obj) {
+      var tbdata = obj.data;
+      if (obj.event === 'del') {
+        layer.confirm('真的删除此商品么', function (index) {
+          //del star
+          $.ajax({
+            type: "POST",
+            url: "/{$Think.config.admin_url}/index/delgood.html",
+            data: 'id=' + tbdata.id,
+            success: function (data) {
+              // layer.alert(data);
+              if (data == "0") {
+                layer.msg('删除失败,该分类下存在卡密');
+              } else if (data == "1") {
+                layer.msg('删除成功');
+                obj.del();
+              } else if (data == "2") {
+                layer.msg('删除失败');
+              }
+            }
+          });
+          //del end
+          layer.close(index);
+        });
+      } else if (obj.event === 'edit') {
+        window.location.href = '/{$Think.config.admin_url}/index/editgood.html?id=' + tbdata.id;
+      } else if (obj.event === 'link') {
+        layer.alert('{$siteinfo.siteurl}/trade/'+ tbdata.id+'.html');
+      } else if (obj.event === 'delkm') {
+        layer.confirm('此操作会清空未售和已售卡密,确定吗？', function (index) {
+          window.location.href = '/{$Think.config.admin_url}/index/delkm.html?id=' + tbdata.id;
+
+        layer.close(index);
+        });
+      }
+    });
+    var $ = layui.$, active = {
+      reload: function () {
+        var demoReload = $('#demoReload');
+
+        //执行重载
+        table.reload('good', {
+          page: {
+            curr: 1 //重新从第 1 页开始
+          }
+          , where: {
+            keyword: demoReload.val()
+          }
+        });
+      }
+    };
+    $('.demoTable .layui-btn').on('click', function () {
+      var type = $(this).data('type');
+      active[type] ? active[type].call(this) : '';
+    });
+  });
+  
+
+
+</script>
+
+{/block}

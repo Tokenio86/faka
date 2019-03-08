@@ -1,0 +1,102 @@
+{extend name="index" /}
+{block name="title"}
+常用设置
+{/block}
+{block name="body"}
+<div class="demoTable">
+  <div class="layui-inline">
+    <input class="layui-input"  id="demoReload" autocomplete="off" placeholder="分类名称/分类简称">  
+  </div>
+  <button class="layui-btn" data-type="reload">查询</button>
+  <button class="layui-btn" onclick="addlink()">添加</button>
+</div>
+
+<table class="layui-hide" id="link" lay-filter="link"></table>
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+      
+      <script>
+          layui.use('table', function () {
+              var table = layui.table;
+              table.render({
+                elem: '#link'
+                , url: '/{$Think.config.admin_url}/index/linkdata'
+                , cellMinWidth: 80
+                , skin: 'row'
+                , even: true
+                , cols: [[
+                  { field: 'id', title: 'ID', sort: true, align: 'center' }
+                  , { field: 'sitename', title: '网站名称', align: 'center' }
+                  , { field: 'siteurl', title: '网站链接', align: 'center' }
+                  , { field: 'sort', title: '排序', sort: true, align: 'center' }
+                  , { width: 178, align: 'center', toolbar: '#barDemo' }
+                ]]
+                , page: true
+                , limit: 20
+              });
+              table.on('tool(link)', function (obj) {
+                var tbdata = obj.data;
+                if (obj.event === 'del') {
+                  layer.confirm('真的删除链接么', function (index) {
+                    //del star
+                    $.ajax({
+                      type: "POST",
+                      url: "/{$Think.config.admin_url}/index/dellink.html",
+                      data: 'id=' + tbdata.id,
+                      success: function (data) {
+                      if(data=='1'){
+                        layer.msg('删除成功');
+                        obj.del();
+                      }else{
+                         layer.msg('删除失败');
+                      }
+                      }
+                    });
+                    //del end
+                    layer.close(index);
+                  });
+                } else if (obj.event === 'edit') {
+                  window.location.href = '/{$Think.config.admin_url}/index/editlink.html?id=' + tbdata.id;
+                }
+              });
+             var $ = layui.$, active = {
+                reload: function () {
+                  var demoReload = $('#demoReload');
+
+                  //执行重载
+                  table.reload('link', {
+                    page: {
+                      curr: 1 //重新从第 1 页开始
+                    }
+                    , where: {
+                      keyword: demoReload.val()
+                    }
+                  });
+                }
+              };
+              $('.demoTable .layui-btn').on('click', function () {
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+              });
+            });
+     function addlink(){
+        layer.open({
+        type: 2,
+        title: '添加站点',
+        shadeClose: true,
+        shade: 0.8,
+        area: ['400px', '50%'],
+        content: '/{$Think.config.admin_url}/index/addlink' //iframe的url
+        }); 
+     }
+     function dellink(id){
+      layer.confirm('删除?', function(index){
+        window.location.href="/{$Think.config.admin_url}/index/dellink.html?id="+id; 
+  
+     layer.close(index);
+    });       
+     }
+      </script>
+{/block}
